@@ -1,0 +1,7 @@
+Django==5.2.8
+celery==5.6.0
+redis
+djangorestframework==3.16.1
+python-decouple
+psycopg[binary]
+drf-spectacular

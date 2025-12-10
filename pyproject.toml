@@ -1,0 +1,150 @@
+[project]
+name = "smart-collect"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "celery==5.6.0",
+    "celery-types>=0.23.0",
+    "django==5.2.8",
+    "django-stubs>=5.2.8",
+    "django-stubs-ext>=5.2.8",
+    "djangorestframework==3.16.1",
+    "djangorestframework-stubs>=3.16.6",
+    "drf-spectacular>=0.29.0",
+    "psycopg[binary]>=3.3.2",
+    "python-decouple>=3.8",
+    "python-decouple-stubs>=3.8.0.4",
+    "redis>=7.1.0",
+]
+
+[dependency-groups]
+linters = [
+    "typos>=1.40.0",
+    "ruff>=0.14.8",
+    "deptry>=0.24.0",
+    "mypy>=1.19.0",
+    "types-python-dateutil>=2.9.0.20241206",
+]
+
+[tool.deptry]
+ignore = ["DEP002",]
+
+
+[tool.uv]
+required-version = ">=0.5.2"
+
+[tool.ruff]
+#line-length = 100
+required-version = "0.14.8"
+target-version = "py310"
+extend-exclude = [
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+preview = true
+
+[tool.ruff.lint]
+dummy-variable-rgx = "^(args|kwargs|_|__|ctx|data)$"
+fixable = ["I", "RUF022", "RUF023", "F401"]
+preview = true
+select = ["ALL"]
+ignore = [
+    "S101",
+    "G004",
+    "C901",
+    "S608",
+    # While the E501 rule can be used alongside the formatter,
+    # the formatter only makes a best-effort attempt to wrap
+    # lines at the configured line-length. As such, formatted
+    # code may exceed the line length, leading to E501 errors.
+    "ANN201",  # missing-return-type-undocumented-public-function
+    "ANN401",  # any-type
+    "ANN002",  # missing-type-args
+    "ANN003",  # missing-type-kwargs
+    "ANN204",  # missing-return-type-special-method
+    "COM812",
+    "CPY001",  # missing-copyright-notice
+    "D100",  # undocumented-public-module
+    "D101",  # undocumented-public-class
+    "D102",  # undocumented-public-method
+    "D103",  # undocumented-public-function
+    "D104",  # undocumented-public-package
+    "D105",  # undocumented-magic-method
+    "D106",  # undocumented-public-nested-class
+    "D107",  # undocumented-public-init
+    "D203",  # one-blank-line-before-class
+    "D205",  # blank-line-after-summary
+    "D213",  # multi-line-summary-second-line
+    "D400",  # ends-in-period
+    "DTZ003",  # call-datetime-utcnow
+    "DTZ012",  # call-date-fromtimestamp
+    "DTZ901",  # datetime-min-max
+    "DTZ007",  # call-datetime-strptime-without-zone
+    "D415",  # ends-in-punctuation
+    "E501",  # line-too-long
+    "EM101",  # raw-string-in-exception
+    "EM102",  # f-string-in-exception
+    "ERA001",  # commented-out-code
+    "FIX001",  # line-contains-fixme
+    "FIX002",  # line-contains-todo
+    "FURB101",  # read-whole-file
+    "FURB110",  # if-exp-instead-of-or-operator
+    "FURB118",  # reimplemented-operator
+    "FURB140",  # reimplemented-operator
+    "DOC201",  # docstring-missing-returns
+    "DOC501",  # docstring-missing-exception
+    "PERF203",  #try-except-in-loop
+    "PLR0904",  # too-many-public-methods
+    "PLR1730",  # if-stmt-min-max
+    "PLC1901",  # compare-to-empty-string
+    "PLR2004",  # magic-value-comparison
+    "PLR6201",  # literal-membership
+    "PLR6301",  # no-self-use
+    "PTH",  # flake8-use-pathlib
+    "RUF001",  # ambiguous-unicode-character-string
+    "RUF002",  # ambiguous-unicode-character-docstring
+    "RUF003",  # ambiguous-unicode-character-comment
+    "RUF012",  # mutable-class-default
+    "RUF052",  # mutable-class-default
+    "SIM108",  # if-else-block-instead-of-if-exp
+    "SIM118",  # in-dict-keys
+    "TC001",  # typing-only-first-party-import
+    "TC002",  # typing-only-third-party-import
+    "TC003",  # typing-only-standard-library-import
+    "TC006",  # runtime-cast-value
+    "TD001",  # invalid-todo-tag
+    "TD002",  # missing-todo-author
+    "TD003",  # missing-todo-link
+    "TD004",  # missing-todo-colon
+    "TD005",  # missing-todo-desciption
+    "TD006",  # invalid-todo-capitalization
+    "TRY003",  # raise-vanilla-args
+    # When using Ruff as a formatter, we recommend avoiding the following lint rules
+    "W191",
+    "E111",
+    "E114",
+    "E117",
+    "D206",
+    "D300",
+    "Q000",
+    "Q001",
+    "Q002",
+    "Q003",
+    "COM812",
+    "COM819",
+    "ISC001",
+    "ISC002",
+    "RUF100" # TODO: убрать!
+]
+
+[tool.mypy]  
+mypy_path = "."  
+plugins = ["mypy_django_plugin.main"]  
+[tool.django-stubs]  
+django_settings_module = "django_project.settings"

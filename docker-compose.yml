@@ -1,0 +1,41 @@
+  services:
+    db:
+        image: postgres:16-alpine
+        restart: always
+        user: postgres
+        environment:
+          - LC_ALL=C.UTF-8
+          - POSTGRES_PASSWORD=postgres
+          - POSTGRES_USER=postgres
+          - POSTGRES_DB=django_project
+        ports:
+          - 5433:5432 
+    django:
+      build: .
+      command: >
+        sh -c "uv run manage.py makemigrations && 
+              uv run manage.py migrate && 
+              uv run manage.py runserver 0.0.0.0:8000"
+      ports:
+        - "8000:8000"
+      volumes:
+        - .:/django_project
+      depends_on:
+        - db
+        - redis
+    celery:
+      build: .
+      command: uv run celery -A django_project worker -l info
+      volumes:
+        - .:/django_project
+      depends_on:
+        - redis
+        - db
+      environment:
+        - CELERY_BROKER_URL=redis://redis:6379/0
+        - CELERY_RESULT_BACKEND=redis://redis:6379/0
+
+    redis:
+      image: redis:7.4
+      ports:
+        - "6379:6379"
